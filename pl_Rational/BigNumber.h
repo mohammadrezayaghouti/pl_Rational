@@ -25,6 +25,16 @@ public:
         if (!tail) tail = head;
     }
 
+    BigNumber negate() const;
+    BigNumber abs() const {
+        BigNumber result = *this;
+        result.isNegative = false;
+        return result;
+    }
+
+    bool isZero() const;
+    bool getIsNegative() const;
+
     BigNumber& trim() {
         Node* i = head, * target = nullptr;
         if (!i || !i->next) return *this;
@@ -32,6 +42,7 @@ public:
         // Possile memory leak.
         while (i && i->next) {
             if (i->next->value == 0) target = target ? target : i;
+            else target = nullptr;
             i = i->next;
         }
 
@@ -45,12 +56,9 @@ public:
 
     BigNumber add(const BigNumber&) const;
     BigNumber multiply(const BigNumber&) const;
-    BigNumber negate() const;
-    bool isZero() const;
     BigNumber divideby(const BigNumber&) const;
     BigNumber subtract(const BigNumber&) const;
     BigNumber modulo(const BigNumber& other) const;
-    bool getIsNegative() const;
 
     BigNumber& operator=(const BigNumber& other) {
         Node* iterator = other.head;
@@ -78,7 +86,9 @@ public:
     operator std::string() const;
 
     // std::ostream << operator
-    friend std::ostream& operator<<(std::ostream& out, const BigNumber& object) {
-        return (out << static_cast<std::string>(object));
-    }
+    friend std::ostream& operator<<(std::ostream& out, const BigNumber& object);
 };
+
+inline std::ostream& operator<<(std::ostream& out, const BigNumber& object) {
+    return (out << static_cast<std::string>(object));
+}

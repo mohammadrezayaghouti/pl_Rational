@@ -14,7 +14,8 @@ public:
     Rational multiply(const Rational&) const;
     Rational divide(const Rational&) const;
     void simplify();
-    BigNumber calculateGCD(const BigNumber&, const BigNumber&) const;
+
+    static BigNumber calculateGCD(const BigNumber& a, const BigNumber& b);
 
     // cast to std::string
     operator std::string() const {

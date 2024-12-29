@@ -21,7 +21,7 @@ Rational Rational::add(const Rational& other) const {
 }
 
 Rational Rational::subtract(const Rational& other) const {
-    BigNumber newNumerator = numerator.multiply(other.denominator).add(denominator.multiply(other.numerator).negate());
+    BigNumber newNumerator = numerator.multiply(other.denominator).subtract(denominator.multiply(other.numerator));
     BigNumber newDenominator = denominator.multiply(other.denominator);
     Rational result(newNumerator, newDenominator);
     result.simplify();
@@ -55,7 +55,7 @@ void Rational::simplify() {
     }
 }
 
-BigNumber Rational::calculateGCD(const BigNumber& a, const BigNumber& b) const {
+BigNumber Rational::calculateGCD(const BigNumber& a, const BigNumber& b) {
     if (b.isZero()) return a;
     return calculateGCD(b, a.modulo(b));
 }
